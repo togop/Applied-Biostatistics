@@ -20,10 +20,6 @@ boxplot(count[,1])
 
 # Ex 13:
 
-# The functions for the density/mass function, cumulative distribution function, quantile function and random variate generation 
-# are named in the form dxxx,                  pxxx,                             qxxx              and rxxx respectively.
-
-
 # a) p - error rate  X -> Bin(50, p=.1)
 
 # b)
@@ -68,14 +64,9 @@ countInCI <- function(n){
     sample <- rexp(n, rate)
     emu <- mean(sample)
     esd <- sd(sample)
-     # / sqrt(1000)
     esd
-    # not sure about , 0; could bw 0.5
     a <- 1 - .1/2
-    a
-#    fi <- qexp(a, rate)
     fi <- qnorm(a,0)
-    fi
     ci.start <- emu - fi*esd/sqrt(n)
     ci.end <- emu + fi*esd/sqrt(n)
     if (0.5 >= ci.start & 0.5 <= ci.end) {
