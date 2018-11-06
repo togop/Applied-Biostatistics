@@ -27,7 +27,7 @@ fracture <- read.table("bone-fracture.csv", sep = ";", header = TRUE)
 summary(fracture)
 str(fracture)
 ```
-Find an appropriate distribution for each of the four random variables and estimate its parameters. If possible, indicate an approximate 95% confidence interval for each parameter. Visualize the distri- bution of the data and the distribution of your fitted model.
+Find an appropriate distribution for each of the four random variables and estimate its parameters. If possible, indicate an approximate 95% confidence interval for each parameter. Visualize the distribution of the data and the distribution of your fitted model.
 
 For example: if you consider a variable to have come from a binomial distribution, you estimate parameter ??. Then, using the standard error of this estimated parameter and the formula, calculate the confidence interval of ??. Finally, recheck whether your guess was appropriate by looking at the Q-Q plot (which should show a straight line) and adding the estimated probability mass function to the histogram (which should match one another).
 
@@ -38,15 +38,28 @@ You can also embed plots, for example:
 ```{r compDists, echo=TRUE}
 library("car")
 
+fdata <- fracture$conc
+desc <- "concentration"
+
 compDists <- function(fdata, desc) {
 #  def.par=par(no.readonly = T)
 #  layout.show(layout(matrix(c(1,1,2,3), nrow=2, ncol=2, byrow = TRUE)))
   
   dmin <- floor(min(fdata))
   dmax <- ceiling(max(fdata))
-  
+  size <- length(fdata)
+  size <- length(fdata)
   hist(fdata, freq = F, breaks = 20, xlab = desc, xlim = c(dmin, dmax), main = paste("Histogram of ", desc))
-  abline(v = mean(fdata), lwd = 2, col = "blue")
+  mu <- mean(fdata)
+  abline(v = mu, lwd = 2, col = "blue")
+  sd <- sd(fdata)
+  max <- max(fdata)
+  sem <- sd(fdata)/sqrt(size)
+  a <- 1 - .05/2
+  fi <- qnorm(a,0)
+  lines(c(mu - sem, mu + sem), c(0,0), lwd = 2, col = "red")
+  text(mu + sem, 0,"SEM")
+   
   xseq=seq(dmin,dmax, (dmax-dmin)/100)
   lines(xseq, dnorm(xseq, mean=mean(fdata), sd=sd(fdata)), lwd = 2, col = "steelblue")
   lines(xseq, dunif(xseq, min = dmin, max = dmax), lwd = 2, col = "green")
@@ -91,6 +104,10 @@ compDists(fracture$no.cells, "number of cells")
 fdata <- fracture$hit
 summary(fdata)
 qqPlot(fdata, dist = "binom", main = " vs binom distribution", xlab = "Theor. quantiles (binom-distribution)", ylab = "Empirical quantiles", size=1, prob=mean(fdata))
+size <- length(fdata)
+success <- length(fdata[fdata==1])
+(1 - pbinom(success, size=size, prob = .5))
+binom.test(x=success,n=size)
 #var(fdata)
 ```
 
