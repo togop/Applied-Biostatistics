@@ -182,6 +182,7 @@ compCDF(fdata, desc, ppois, mean(fdata))
 
 # Conclusion: Normal or Poisson Distribution with confidential interval for the mean :
 getMeanCI(fdata)
+# Poissson is prefferred as more parsimoneous
   
 ## Hit
 fdata <- fracture$hit
