@@ -9,7 +9,7 @@ library(ggplot2)
 fracture <- read.table("bone-fracture.csv", sep = ";", header = TRUE)
 
 
-getCI <- function(fdata) {
+getMeanCI <- function(fdata) {
   mu <- mean(fdata)
   sd <- sd(fdata)
   n <- length(fdata)
@@ -17,6 +17,15 @@ getCI <- function(fdata) {
   
   ci.start <- mu - fi*sd/sqrt(n)
   ci.end <- mu + fi*sd/sqrt(n)
+  return(c(ci.start, ci.end))
+}
+
+getBinCI <- function(p) {
+  fi <- qnorm(0.975)
+  n <- length(fdata)
+  
+  ci.start <- p - fi*sqrt(p*(1-p)/n)
+  ci.end <- p + fi*sqrt(p*(1-p)/n)
   return(c(ci.start, ci.end))
 }
 
@@ -71,7 +80,7 @@ compExp <- function(fdata, desc) {
 }
 
 compPois <- function(fdata, desc) {
-  qqPlot(fdata, dist = "pois", main = paste(desc, " vs Poisson distribution"), xlab = "Theor. quantiles (poisson-distribution)", ylab = "Empirical quantiles", lambda = mean(fdata))
+  qqPlot(fdata, dist = "pois", main = paste(desc, " vs Poisson distribution"), xlab = "Theor. quantiles (poisson-distribution)", ylab = "Empirical quantiles", lambda = mean(fdata), envelope=.975)
 }
 
 #  qqPlot(fdata, dist = "t", main = paste(desc, " vs Student's T distribution"), xlab = "Theor. quantiles (t-distribution)", ylab = "Empirical quantiles", df = 49)
@@ -107,7 +116,9 @@ compCDF(fdata, desc, punif, floor(min(fdata)), ceiling(max(fdata)))
 compNorm(fdata, desc)
 compCDF(fdata, desc, pnorm, mean(fdata), sd(fdata))
 
-getCI(fdata)
+# Conclusion: Normal Distribution with confidential interval for the mean or Lambda:
+getMeanCI(fdata)
+
 #compExp(fdata, desc)
 #compCDF(fdata, desc, pexp, 1/mean(fdata))
 
@@ -122,6 +133,8 @@ compCDF(fdata, desc, pnorm, mean(fdata), sd(fdata))
 
 compUnif(fdata, desc)
 compCDF(fdata, desc, punif, floor(min(fdata)), ceiling(max(fdata)))
+
+# Conclusion: Iniform distribution
 
 #compExp(fdata, desc)
 #compCDF(fdata, desc, pexp, 1/mean(fdata))
@@ -138,24 +151,33 @@ compCDF(fdata, desc, punif, floor(min(fdata)), ceiling(max(fdata)))
 compNorm(fdata, desc)
 compCDF(fdata, desc, pnorm, mean(fdata), sd(fdata))
 
-compExp(fdata, desc)
-compCDF(fdata, desc, pexp, 1/mean(fdata))
+#compExp(fdata, desc)
+#compCDF(fdata, desc, pexp, 1/mean(fdata))
 
 compPois(fdata, desc)
 compCDF(fdata, desc, ppois, mean(fdata))
 
+# Conclusion: Normal or Poisson Distribution with confidential interval for the mean :
+getMeanCI(fdata)
+  
 ## Hit
 fdata <- fracture$hit
 desc <- "hit"
 
 histPlot(fdata, desc)
 
-qqPlot(fdata, dist = "binom", main = " vs binom distribution", xlab = "Theor. quantiles (binom-distribution)", ylab = "Empirical quantiles", size = 1, prob = mean(fdata))
-var(fdata)
+#qqPlot(fdata, dist = "binom", main = " vs binom distribution", xlab = "Theor. quantiles (binom-distribution)", ylab = "Empirical quantiles", size = 1, prob = mean(fdata))
+#var(fdata)
 
+# Ho : E. Bruch guess just by chance
+# Ha : E. Bruch guest most of the casses
 bintest <- binom.test(length(fdata[fdata == 1]), length(fdata), p = 0.5) 
 bintest
 bintest$p.value
+# P-value < 0.01 : Ho rejected, acceppt Ha
 
-plot(qnbinom(ppoints(fdata), size = 1, mu = mean(fdata)))
-abline(0,1)
+# Concliusion: Binomial distribution with estimated p confidential interval:
+getBinCI(mean(fdata))
+
+#plot(qnbinom(ppoints(fdata), size = 1, mu = mean(fdata)))
+#abline(0,1)
