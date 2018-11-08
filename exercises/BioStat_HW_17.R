@@ -29,6 +29,15 @@ getBinCI <- function(p) {
   return(c(ci.start, ci.end))
 }
 
+getUnifCI <- function(p) {
+  fi <- qnorm(0.975)
+  n <- length(fdata)
+  
+  ci.start <- p - fi*sqrt(p*(1-p)/n)
+  ci.end <- p + fi*sqrt(p*(1-p)/n)
+  return(c(ci.start, ci.end))
+}
+
 histPlot <- function(fdata, desc) {
   #  def.par=par(no.readonly = T)
   #  layout.show(layout(matrix(c(1,1,2,3), nrow=2, ncol=2, byrow = TRUE)))
@@ -110,11 +119,15 @@ desc <- "concentration"
 
 histPlot(fdata, desc)
 
+# compare with uniform
 compUnif(fdata, desc)
-compCDF(fdata, desc, punif, floor(min(fdata)), ceiling(max(fdata)))
+compCDF(fdata, desc, punif, min(fdata), max(fdata))
+# doesn't look good fit
 
+# compare with normal
 compNorm(fdata, desc)
 compCDF(fdata, desc, pnorm, mean(fdata), sd(fdata))
+# it looks good fit
 
 # Conclusion: Normal Distribution with confidential interval for the mean or Lambda:
 getMeanCI(fdata)
@@ -128,13 +141,18 @@ desc <- "difference"
 
 histPlot(fdata, desc)
 
+# compare with normal
 compNorm(fdata, desc)
 compCDF(fdata, desc, pnorm, mean(fdata), sd(fdata))
+# doesn't look very good fit
 
+# compare with uniform
 compUnif(fdata, desc)
-compCDF(fdata, desc, punif, floor(min(fdata)), ceiling(max(fdata)))
+compCDF(fdata, desc, punif, min(fdata), max(fdata))
+# it looks good fit
 
-# Conclusion: Iniform distribution
+# Conclusion: Iniform distribution with confident interval (not big sense):
+getMeanCI(fdata)
 
 #compExp(fdata, desc)
 #compCDF(fdata, desc, pexp, 1/mean(fdata))
@@ -145,17 +163,22 @@ desc <- "number of cells"
 
 histPlot(fdata, desc)
 
+# compare with uniform
 compUnif(fdata, desc)
-compCDF(fdata, desc, punif, floor(min(fdata)), ceiling(max(fdata)))
+compCDF(fdata, desc, punif, min(fdata), max(fdata))
 
+# compare with normal
 compNorm(fdata, desc)
 compCDF(fdata, desc, pnorm, mean(fdata), sd(fdata))
+# it looks good fit
 
 #compExp(fdata, desc)
 #compCDF(fdata, desc, pexp, 1/mean(fdata))
 
+# compare with poisson
 compPois(fdata, desc)
 compCDF(fdata, desc, ppois, mean(fdata))
+# it looks even better fit
 
 # Conclusion: Normal or Poisson Distribution with confidential interval for the mean :
 getMeanCI(fdata)
@@ -165,6 +188,7 @@ fdata <- fracture$hit
 desc <- "hit"
 
 histPlot(fdata, desc)
+# makes no big sense
 
 #qqPlot(fdata, dist = "binom", main = " vs binom distribution", xlab = "Theor. quantiles (binom-distribution)", ylab = "Empirical quantiles", size = 1, prob = mean(fdata))
 #var(fdata)
@@ -174,10 +198,11 @@ histPlot(fdata, desc)
 bintest <- binom.test(length(fdata[fdata == 1]), length(fdata), p = 0.5) 
 bintest
 bintest$p.value
-# P-value < 0.01 : Ho rejected, acceppt Ha
+# P-value < 0.05: Ho rejected, acceppt Ha
 
 # Concliusion: Binomial distribution with estimated p confidential interval:
 getBinCI(mean(fdata))
+# this not so sure!
 
 #plot(qnbinom(ppoints(fdata), size = 1, mu = mean(fdata)))
 #abline(0,1)
