@@ -21,6 +21,7 @@ getMeanCI <- function(fdata) {
 }
 
 getBinCI <- function(p) {
+  # https://sigmazone.com/binomial-confidence-intervals/
   fi <- qnorm(0.975)
   n <- length(fdata)
   

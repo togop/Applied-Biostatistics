@@ -277,46 +277,52 @@ Two samples: experimental group $\left\{ X _ { i } \right\} _ { i } ,$ control g
 |       | $H _ { A }$ | type II error (FN) | true positive: $S$     | $m - m _ { 0 }$ | 
 | Total |             | $m - R$            |  $R$                   | $m$             |
 
-##### Family-Wise Error Rate: $\mathrm { FWER } = P [ 1$ or more type $|$ errors $] = P [ V \geq 1 ]$
-* FWER controlled by experiment-wise type I error rate $\overline { \alpha }$  
-* Test procedure that guarantees a FWER of (at most) $\overline { \alpha } :$
-1. for each test case (e.g. gene), calculate p-value
-2. adjust p-value
+##### Family-Wise Error Rate: $\mathrm { FWER } = P [ 1$ or more type $|$ errors $] = P [ V \geq 1 ]$ : n:20-50, errors are critical
+FWER controlled by experiment-wise type I error rate $\overline { \alpha }$  
+Test procedure that guarantees a FWER of (at most) $\overline { \alpha } :$  
+1. for each test case (e.g. gene), calculate p-value  
+2. adjust p-value  
 3. reject null hypotheses whose adjusted p-value is smaller than $\overline { \alpha }$ ; accept others
+
+##### Controlling FWER: Bonferroni method
+$P _ { \mathrm { adj } , i } = \min \left\{ m \cdot P _ { i } , 1 \right\}$  
+quarantees $\mathrm { FWER } \leq \overline { \alpha }$  
 
 ##### Controlling FWER: Holm method
 order p-values: $P _ { ( 1 ) } \leq P _ { ( 2 ) } \leq P _ { ( 3 ) } \leq \ldots \leq P _ { ( m ) }$  
-adjust p-values: $P _ { \mathrm { adj } , ( i ) } = \min \left\{ ( m - i + 1 ) \cdot P _ { ( i ) } , 1 \right\} ;$ if value below $P _ { \mathrm { adj } , ( i - 1 ) } ,$ replace it by $P _ { \mathrm { adj } , ( i - 1 ) }$  
+adjust p-values: $P _ { \mathrm { adj } , ( i ) } = \max \left\{ \min \left\{ ( m - i + 1 ) \cdot P _ { ( i ) } , 1 \right\} , P _ { \mathrm { adj } , ( i - 1 ) } \right\}$  
 reject null hypotheses whose adjusted p-value is smaller than $\overline { \alpha }$; accept others  
-Procedure quarantees $\mathrm { FWER } \leq \overline { \alpha }$  
+Procedure quarantees $\mathrm { FWER } \leq \overline { \alpha }$
 
 ##### Adjusted p-value
-The adjusted p-value of a certain null hypothesis is the smallest experiment-wise type I error rate $\overline { \alpha }$ for which we reject this hypothesis for the given data set.  
+The adjusted p-value of a certain null hypothesis is the smallest experiment-wise type I error rate $\overline { \alpha }$ for which we reject this hypothesis for the given data set.
 
-##### False discovery rate: $\mathrm { FDR } = E \left[ \frac { \mathrm { FP } } { \mathrm { FP } + \mathrm { TP } } \right] = E \left[ \frac { V } { R } \right]$  
+##### False discovery rate: $\mathrm { FDR } = E \left[ \frac { \mathrm { FP } } { \mathrm { FP } + \mathrm { TP } } \right] = E \left[ \frac { V } { R } \right]$ : n > 500 ; looking for discovery  
 1. for each test case, calculate p-value
 2. adjust p-values to get corresponding q-values
 3. reject null hypotheses whose q-value is smaller than $\overline { q }$; accept others 
 
 ##### Controlling FDR: Benjamini-Hochberg method
 order p-values: $P _ { ( 1 ) } \leq P _ { ( 2 ) } \leq P _ { ( 3 ) } \leq \ldots \leq P _ { ( m ) }$  
-adjust p-values to get q-values: $Q _ { ( i ) } = \min \left\{ \frac { m } { i } \cdot P _ { ( i ) } , 1 \right\} ;$ if value below $Q _ { ( i - 1 ) , }$ replace it by $Q _ { ( i - 1 ) }$   
+adjust p-values to get q-values: $Q _ { ( i ) } = \max \left\{ \min \left\{ \frac { m } { i } \cdot P _ { ( i ) } , 1 \right\} , Q _ { ( i - 1 ) } \right\}$   
 reject null hypotheses whose q-value is smaller than $\overline { q }$; accept others  
-Procedure quarantees $F \mathrm { DR } \leq \overline { q }$  
+Procedure quarantees $F \mathrm { DR } \leq \overline { q }$
 
 ##### Simple linear regression: $Y _ { i } = \beta _ { 0 } + \beta _ { 1 } x _ { i } + E _ { i }$ , $E _ { 1 } , \ldots , E _ { n } \stackrel { \mathrm { i } . \mathrm { i } . \mathrm { d } } { \sim } \mathcal { N } \left( 0 , \sigma ^ { 2 } \right)$ , $i = 1 , \dots , n$
-$Y _ { i }$ : response variable  
-$x _ { i }$ : explanatory variable  
-$E _ { i }$ : error or noise variables  
+$Y _ { i }$ : response variable  ;  $x _ { i }$ : explanatory variable  ;  $E _ { i }$ : error or noise variables  
 Residuals: $R _ { i } = Y _ { i } - \hat { \beta } _ { 0 } - \hat { \beta } _ { 1 } x _ { i }$  
 Residual Sum of Squares: RSS $= \sum _ { i = 1 } ^ { n } R _ { i } ^ { 2 }$  
-Minimizers $\hat { \beta } _ { 0 }$ and $\hat { \beta } _ { 1 }$ of RSS are unbiased estimators for the true coefficients $\beta _ { 0 }$ and $\beta _ { 1 }$  
-$R _ { i } = Y _ { i } - \hat { \beta } _ { 0 } - \hat { \beta } _ { 1 } x _ { i }$  
+Minimizers $\hat { \beta } _ { 0 }$ and $\hat { \beta } _ { 1 }$ of RSS: unbiased estimators for the true  $\beta _ { 0 }$ and $\beta _ { 1 }$  
 Estimate $\hat { \sigma } ^ { 2 } = \frac { 1 } { n - 2 } \sum _ { i = 1 } ^ { n } R _ { i } ^ { 2 }$  
 
+##### Significance of explanatory variable: t-test
+$H _ { 0 } : \beta _ { 1 } = 0$; $H _ { \mathrm { A } } : \beta _ { 1 } \neq 0$  
+$T = \frac { \hat { \beta } _ { 1 } - 0 } { \widehat { \mathrm { se } } \left( \hat { \beta } _ { 1 } \right) }$ ; $H _ { 0 } : T \sim t _ { n - 2 }$  
+$K = \left( - \infty , - t _ { n - 2,1 - \frac { \alpha } { 2 } } \right] \cup \left[ t _ { n - 2,1 - \frac { \alpha } { 2 } } , \infty \right)$ , $| T | > t _ { n - 2,1 - \frac { \alpha } { 2 } } : reject$
+
 #####  Coefficient of determination $R ^ { 2 } = \left( \frac { s _ { \hat { y } y } } { s _ { \hat { y } } s _ { y } } \right) ^ { 2 }$
-$\hat { \beta } _ { 1 } = \frac { s _ { x y } } { s _ { x } ^ { 2 } }$  
-$s _ { x y } = \frac { 1 } { n - 1 } \sum _ { i = 1 } ^ { n } \left( x _ { i } - \overline { x } \right) \left( y _ { i } - \overline { y } \right)$  
+$\hat { \beta } _ { 1 } = \frac { s _ { x y } } { s _ { x } ^ { 2 } } = \frac { \operatorname { Cov } ( X, Y ) } { \operatorname { Var } ( Y ) } = \operatorname { Cor } ( Y , X ) \frac { \operatorname { Sd } ( Y ) } { \operatorname { Sd } ( X ) }$ , $s _ { x y } = \frac { 1 } { n - 1 } \sum _ { i = 1 } ^ { n } \left( x _ { i } - \overline { x } \right) \left( y _ { i } - \overline { y } \right)$  
+$\hat { \beta } _ { 0 } = \overline { Y } - \hat { \beta } _ { 1 } \overline { X }$  
 
 ##### Fitting linear model to transformed data
 $\log \left( Y _ { i } \right) = \hat { \beta } _ { 0 } + \hat { \beta } _ { 1 } \log \left( X _ { i } \right) + E _ { i }$  
