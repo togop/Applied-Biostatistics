@@ -1,0 +1,325 @@
+---
+title: "Applied Bioostatistics I - formulas"
+geometry: "left=0.7cm,right=0.7cm,top=0cm,bottom=0.7cm"
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+##### Axioms of Kolmogorov:
+$A (probability\ measure) \subset \Omega (sample\ space) : P [ A ] \in [ 0,1 ]$ :
+
+* $0 \leq P [ A ] \leq 1$ for every event $A \subset \Omega$
+* $P [ \Omega ] = 1$
+* $P [ A \cup B ] = P [ A ] + P [ B ]$ for _disjoint_ event A and B.
+
+for $A$, $B$ events  
+
+##### De Morgan's laws: $( A \cap B ) ^ { c } = A ^ { c } \cup B ^ { c }$ and $( A \cup B ) ^ { c } = A ^ { c } \cap B ^ { c }$
+
+##### Probability of unions: $P [ A \cup B ] = P [ A ] + P [ B ] - P [ A \cap B ]$
+General: $A _ { 1 } , A _ { 2 } , \dots , A _ { n }$ events:   
+$P \left[ A _ { 1 } \cup A _ { 2 } \cup \ldots \cup A _ { n } \right] = \sum _ { i _ { 1 } = 1 } ^ { n } P \left[ A _ { i _ { 1 } } \right] - \sum _ { i _ { 1 } = 1 } ^ { n - 1 } \sum _ { i _ { 2 } = i _ { 1 } + 1 } ^ { n } P \left[ A _ { i _ { 1 } } \cap A _ { i _ { 2 } } \right] +$
+$\sum _ { i _ { 1 } = 1 } ^ { n - 2 } \sum _ { i _ { 2 } = i _ { 1 } + 1 } ^ { n - 1 } \sum _ { i _ { 3 } = i _ { 2 } + 1 } ^ { n } P \left[ A _ { i _ { 1 } } \cap A _ { i _ { 2 } } \cap A _ { i _ { 3 } } \right] - \ldots$
+
+##### Discrete probability spaces
+$A \subset \Omega : P [ A ] = \sum _ { i \omega _ { i } \in A } P \left[ \left\{ \omega _ { i } \right\} \right]$  
+$P [ \Omega ] = \sum _ { i \geq 1 } P \left[ \left\{ \omega _ { i } \right\} \right]$  
+$\Omega$ is finite often: $P \left[ \left\{ \omega _ { i } \right\} \right] = 1 / | \Omega |$
+
+##### Independence if: $P [ A \cap B ] = P [ A ] \cdot P [ B ]$
+
+##### Conditional probability: $P [ A | B ] = \frac { P [ A \cap B ] } { P [ B ] }$ , given $P [ B ] > 0$ 
+
+##### Law of total probability
+for disjoint $B _ { 1 } , B _ { 2 } , \ldots , B _ { k }$ and $B _ { 1 } , B _ { 2 } , \ldots , B _ { k } = \Omega$:  
+$P [ A ] = \sum _ { i = 1 } ^ { k } P \left[ A \cap B _ { i } \right] = \sum _ { i = 1 } ^ { k } P [ A | B _ { i } ] P \left[ B _ { i } \right]$
+
+##### Bayes' theorem:
+$P [ B | A ] = \frac { P [ A \cap B ] } { P [ A ] } = \frac { P [ A | B ] P [ B ] } { P [ A ] }$, given $P [ A ] > 0$ and $P [ B ] > 0$  
+Total probability: $P \left[ B _ { i } | A \right] = \frac { P \left[ A \cap B _ { i } \right] } { P [ A ] } = \frac { P [ A | B _ { i } ] P \left[ B _ { i } \right] } { \sum _ { j = 1 } ^ { k } P [ A | B _ { j } ] P \left[ B _ { j } \right] }$
+
+##### Cumulative distribution function (CDF) of a random variable $X$: $F _ { X } ( x ) : = P [ X \leq x ]$
+continuous: $F ( x ) = \int _ { - \infty } ^ { x } f ( u ) \mathrm { d } u$
+
+##### Discrete random variables
+$X : \Omega \rightarrow \left\{ x _ { 1 } , x _ { 2 } , \ldots \right\}$ ;
+**probability mass function** $p \left( x _ { k } \right) : = P \left[ X = x _ { k } \right]$ ;
+$A \subset \left\{ x _ { 1 } , x _ { 2 } , \dots \right\}$ :
+
+* $P [ X \in A ] = \sum _ { k : x _ { \in } \in A } p \left( x _ { k } \right)$
+* $\sum _ { k } p \left( x _ { k } \right) = 1$
+* $\operatorname { CDF } : F _ { X } ( x ) = P [ X \leq x ] = \sum _ { k : x _ { k } \leq x } p \left( x _ { k } \right)$
+
+##### Expectation value: $E [ X ] : = \sum _ { k } x _ { k } p \left( x _ { k } \right)$  
+continuous: $E [ X ] = \int _ { - \infty } ^ { \infty } x f ( x ) \mathrm { d } x$
+
+##### Variance: $\operatorname { Var } ( X ) : = \sum _ { k } \left( x _ { k } - E [ X ] \right) ^ { 2 } p \left( x _ { k } \right)$ = $\operatorname { SD ^ { 2 } } ( X )$ : Standard Deviation $^ { 2 }$
+continuous: $\operatorname { Var } ( X ) = \int _ { - \infty } ^ { \infty } ( x - E [ X ] ) ^ { 2 } f ( x ) d x$
+
+##### Bernoulli distribution $X \in \{ 0,1 \}$ $X \sim$ Bernoulli( $\pi )$ , $\pi : = P [ X = 1 ]$  
+
+##### BINOMial distribution $X \in \{ 0,1 , \ldots , n \}$ $X \sim \operatorname { Bin } ( n , \pi ) , n \in \mathbb { N } , \pi \in ( 0,1 )$ 
+* $p ( x ) = P [ X = x ] = \left( \begin{array} { l } { n } \\ { x } \end{array} \right) \pi ^ { x } ( 1 - \pi ) ^ { n - x }$
+* $E [ X ] = n \pi , \operatorname { Var } ( X ) = n \pi ( 1 - \pi )$
+* Approx.: ($n \pi > 5$ & $n ( 1 - \pi ) > 5$) ? $X \approx \mathcal { N } ( n \pi , n \pi ( 1 - \pi ) )$ (only CDF) ; ($n \geq 100$ & $\pi \leq 0.01$ & $n \pi \leq 20$) ? $X \approx \operatorname { Pois } ( n \pi )$  
+
+##### POISson distribution $X \in \mathbb { N }$ $X \sim \operatorname { Pois } ( \lambda ) , \lambda > 0$
+* $p ( x ) = P [ X = x ] = \frac { e ^ { - \lambda } \lambda ^ { x } } { x ! }$
+* $E [ X ] = \lambda , \operatorname { Var } ( X ) = \lambda$
+* CDF: $F ( x ; \lambda ) = \sum _ { i = 0 } ^ { x } \frac { e ^ { - \lambda } \lambda ^ { i } } { i ! }$
+* $X \sim \operatorname { Pois } \left( \lambda _ { 1 } \right)$ , $Y \sim \operatorname { Pois } \left( \lambda _ { 2 } \right)$ independent: $X + Y \sim \operatorname { Pois } \left( \lambda _ { 1 } + \lambda _ { 2 } \right)$  
+
+##### UNIForm distribution $X \sim \mathcal { U } ( [ a , b ] )$
+* $f ( x ) = \left\{ \begin{array} { l l } { \frac { 1 } { b - a } , } & { x \in [ a , b ] } \\ { 0 , } & { \text { otherwise } } \end{array} \right.$
+* $E [ X ] = \frac { b + a } { 2 } , \operatorname { Var } ( X ) = \frac { ( b - a ) ^ { 2 } } { 12 }$
+
+##### NORMal distribution $X \sim \mathcal { N } \left( \mu , \sigma ^ { 2 } \right) , \mu \in \mathbb { R } , \sigma ^ { 2 } > 0$
+* $f ( x ) = \frac { 1 } { \sqrt { 2 \pi } \sigma } \exp \left\{ - \frac { 1 } { 2 } \left( \frac { x - \mu } { \sigma } \right) ^ { 2 } \right\} , x \in \mathbb { R }$
+
+##### Standard normal distribution $Z \sim \mathcal { N } ( 0,1 )$
+* $\varphi ( z ) = \frac { 1 } { \sqrt { 2 \pi } } e ^ { - z ^ { 2 } / 2 } , \quad \Phi ( z ) = \int _ { - \infty } ^ { z } \varphi ( t ) d t$
+* $Z = a X + b \sim \mathcal { N } \left( a \mu + b , a ^ { 2 } \sigma ^ { 2 } \right)$
+* $Z = \frac { X - \mu } { \sigma } \sim \mathcal { N } ( 0 , 1 )$
+
+##### EXPonential distribution $X \sim \operatorname { Exp } ( \lambda ) , \lambda > 0$
+* $f ( x ) = \left\{ \begin{array} { l l } { \lambda e ^ { - \lambda x } , } & { x \geq 0 } \\ { 0 , } & { \text { otherwise } } \end{array} \right.$
+* $E [ X ] = \frac { 1 } { \lambda } , \operatorname { Var } ( X ) = \frac { 1 } { \lambda ^ { 2 } }$
+* Haldane's model: (position of the first crossover) $X \sim \operatorname { Exp } ( 1 )$ 
+
+discrete  | continuous
+|---------------------------------------------------- | ------------------------------------------ |
+| $E [ X ] = \sum _ { k \geq 1 } x _ { k } p \left( x _ { k } \right)$ | $E [ X ] = \int _ { - \infty } ^ { \infty } x f ( x ) d x$ |
+| $\operatorname { Var } ( X ) = \sum _ { k \geq 1 } \left( x _ { k } - E [ X ] \right) ^ { 2 } p \left( x _ { k } \right) = E \left[ X ^ { 2 } \right] - ( E [ X ] ) ^ { 2 }$  | $\operatorname { Var } ( X ) = \int _ { - \infty } ^ { \infty } ( x - E [ X ] ) ^ { 2 } f ( x ) d x$ |p
+
+##### R function naming
+* *p* or "probability", the cumulative distribution function (c. d. f.)
+* *q* for "quantile", the inverse c. d. f.
+* *d* for "density", the density function (p. f. or p. d. f.)
+* *r* for "random", a random variable having the specified distribution
+
+##### Discrete multivariate distributions
+Let $X : \Omega \rightarrow W _ { x }$ and $Y : \Omega \rightarrow W _ { Y }$ be discrete random variables  
+Joint Cumulative Distribution Function: $F _ { X , Y } ( x , y ) : = P [ X \leq x , Y \leq y ]$  
+Joint Probability Mass Function: $p _ { X , Y } ( x , y ) : = P [ X = x , Y = y ] , x \in W _ { X } , y \in W _ { Y }$  
+Marginal Probability Mass Function: $p _ { X } ( x ) = P [ X = x ] = \sum _ { y \in W _ { Y } } p _ { X , Y } ( x , y )$  
+Independence IF: $p _ { X , Y } ( x , y ) = p _ { X } ( x ) p _ { Y } ( y )$  
+Conditional Probability Mass function: $p _ { X | Y = y } ( x ) = \frac { p _ { X , Y } ( x , y ) } { p _ { Y } ( y ) }$  
+
+##### Continuous multivariate distributions
+Let $X \rightarrow \mathbb { R }$ and $Y \rightarrow \mathbb { R }$ be continuous random variables  
+Joint cumulative distribution function: $F _ { X , Y } ( x , y ) : = P [ X \leq x , Y \leq y ]$  
+Joint probability density: $f _ { X , Y } ( x , y ) : = \frac { \partial } { \partial x } \frac { \partial } { \partial y } F _ { X , Y } ( x , y )$  
+$P [ a \leq X \leq b , c \leq Y \leq d ] = \int _ { a } ^ { b } \int _ { c } ^ { d } f _ { X , Y } ( x , y ) d y d x$ ($a < b , c < d$)  
+Marginal probability density: $f _ { X } ( x ) : = \int _ { - \infty } ^ { \infty } f _ { X , Y } ( x , y ) \mathrm { d } y$  
+Independence IF: $f _ { X , Y } ( x , y ) = f _ { X } ( x ) f _ { Y } ( y )$  
+Conditional probability density: $f _ { X | Y = y } ( x ) = \frac { f _ { X , Y } ( x , y ) } { f _ { Y } ( y ) }$  
+
+| Covariance                                          | Correlation                   |
+|-----------------------------------------------------|-------------------------------|
+| $\operatorname { Cov } ( X , Y ) : = E [ ( X - E [ X ] ) ( Y - E [ Y ] ) ]$ | $\rho _ { X Y } : = \frac { \operatorname { Cov } ( X , Y ) } { \sqrt { \operatorname { Var } ( X ) \operatorname { Var } ( Y ) } }$ |  
+* if $X$, $Y$ independent => $\operatorname { Cov } ( X , Y ) = 0$ , $\rho _ { X Y } = 0$ , $E [ X Y ] = E [ X ] \cdot E [ Y ]$ and $\operatorname { Cov } ( X , Y ) = 0$ (the other direction is not true!)
+* $- 1 \leq \rho _ { X Y } \leq 1$
+* $\rho _ { X Y } = 1$ if $Y = a + b X$ for some $b > 0$
+* $\rho x y = - 1$ if $Y = a + b X$ for some $b < 0$
+* $E [ X + Y ] = E [ X ] + E [ Y ]$
+* $E [ a X ] = a E [ X ]$
+* $\operatorname { Var } ( X + Y ) = \operatorname { Var } ( X ) + \operatorname { Var } ( Y ) + 2 \operatorname { Cov } ( X , Y )$
+* $\operatorname { Var } ( a X ) = a ^ { 2 } \operatorname { Var } ( X )$
+
+#### Descriptive Statistics: Model: $\quad X _ { 1 } , X _ { 2 } , \ldots , X _ { n } \stackrel { i.i.d. } { \sim } F _ { X } ( \cdot )$ , Sample: $x _ { 1 } , x _ { 2 } , \dots , x _ { n }$
+Sample MEAN: $\overline { x } = \frac { x _ { 1 } + \ldots + x _ { n } } { n } = \frac { 1 } { n } \sum _ { i = 1 } ^ { n } x _ { i } = S _ { n } / n \rightarrow \mu = E [ X ]$ if $n \rightarrow \infty$ (consistent/unbiased estimator for the true mean)
+Sample VARiance: $s _ { x } ^ { 2 } = \frac { 1 } { n - 1 } \sum _ { i = 1 } ^ { n } \left( x _ { i } - \overline { x } \right) ^ { 2 }$ ($s _ { x }$ : sample Standard Deviation)
+$s _ { x } ^ { 2 } \rightarrow \sigma ^ { 2 } = \operatorname { Var } ( X )$ if $n \rightarrow \infty$  
+$E \left[ s _ { x } ^ { 2 } \right] = \sigma ^ { 2 }$ (consistent/unbiased estimator for the true variance)  
+MEDIAN: ($x _ { ( 1 ) } \leq x _ { ( 2 ) } \leq \dots \leq x _ { ( n ) }$): $m = \left\{ \begin{array} { l } { x _ { ( } ( n + 1 ) / 2 ) },\ n\ is\ odd, \\ { \frac { 1 } { 2 } \left( x _ { ( n / 2 ) } + x _ { ( n / 2 + 1 )} \right),\ otherwise } \end{array} \right.$  
+Empirical $\alpha$ QUANTILE: $q _ { \alpha } = x _ { ( \alpha ( n - 1 ) + 1 ) }$ if $\alpha \cdot ( n - 1 )$ is an integer; otherwise $(x _ { ( \lfloor \alpha ( n - 1 ) \rfloor + 1 ) }$ + $x _ { ( \lceil \alpha ( n - 1 ) \rceil + 1 ) })/2$  
+random variable $X :$ value $m$ such that $P [ X \leq m ] \geq \alpha$ and $P [ X \geq m ] \geq 1 - \alpha$  
+
+### Histogram: bins $h _ { k } : = \# \{ i | x _ { i } \in \left( c _ { k - 1 } , c _ { k } \right] \}$ density $\frac { h _ { k } } { n \left( c _ { k } - c _ { k - 1 } \right) }$ , Box plot IQR ("interquartile range"): $q _ { 0.75 } - q _ { 0.25 }$
+
+### Kernel density estimation
+Given a set of points $x _ { 1 } , x _ { 2 } , \ldots , x _ { n } ,$ the kernel density estimator for the generating distribution is  
+$\hat { f } ( x ) = \frac { 1 } { n h } \sum _ { i = 1 } ^ { n } K \left( \frac { x - x _ { i } } { h } \right)$ (kernel function:arbitrary positive symmetric, $h$: bandwidth)  
+* Uniform/rectangular kernel: $K \sim \mathcal { U } \left( \left[ - \frac { 1 } { 2 } , \frac { 1 } { 2 } \right] \right)$  (same weight for all points)  
+* Gaussian kernel: $K \sim \mathcal { N } ( 0,1 )$  (less weight to far apart points)  
+
+Empirical cumulative distribution function (ECDF): $\hat { F } ( x ) = \frac { \# \{ k | x _ { k } \leq x \} } { n }$  
+Empirical CORrelation: $r = \frac { s _ { x y } } { s _ { x } s _ { y } } \in [ - 1,1 ]$ , empirical COVariance: $s _ { x y } = \frac { 1 } { n - 1 } \sum _ { i = 1 } ^ { n } \left( x _ { i } - \overline { x } \right) \left( y _ { i } - \overline { y } \right)$  
+Linear dependence between 2 samples $\left\{ x _ { i } \right\}$ and $\left\{ y _ { i } \right\}$
+* $r = + 1$ if $y _ { i } = a + b x _ { i }$ for some $b > 0$
+* $r = - 1$ if $y _ { i } = a + b x _ { i }$ for some $b < 0$
+
+##### Standard error of the mean (SEM) = Standard Deviation of the mean
+Natural estimator for $\sigma \left( \overline { X } _ { n } \right)$ : $\mathrm { se } _ { \overline { x } } = \frac { s _ { x } } { \sqrt { n } }$ ; $s _ { x }$ is the empirical standard deviation
+
+##### Law of large numbers: $X$ random variable and $E [ X ] = \mu$, and $X _ { 1 } , X _ { 2 } , \ldots , X _ { n }$ i.i.d. from $X .$ => $\overline { X } _ { n } \rightarrow \mu$ as $n \rightarrow \infty$
+ECDF $\rightarrow$ CDF as $n \rightarrow \infty$
+
+##### Central Limit Theorem
+Let $X$ be random variable with expectation value $\mu$ and variance $\sigma ^ { 2 } ,$ and
+$X _ { 1 } , X _ { 2 } , \ldots , X _ { n }$ i.i.d. from $X$ .  
+Then $\overline { X } _ { n } \approx \mathcal { N } \left( \mu , \frac { \sigma ^ { 2 } } { n } \right)$ for large $n$. : $E \left[ \overline { X } _ { n } \right] = \mu , \sigma \left( \overline { X } _ { n } \right) = \frac { \sigma } { \sqrt { n } } \rightarrow 0$ as $n \rightarrow \infty$  
+$\frac { \sqrt { n } \left( \overline { X } _ { n } - \mu \right) } { \sigma } \approx \mathcal { N } ( 0,1 )$ for large $n$  
+$X \sim \mathcal { N } \left( \mu , \sigma ^ { 2 } \right)$ and $Y = a + b X$: $Y \sim \mathcal { N } \left( a + b \mu , b ^ { 2 } \sigma ^ { 2 } \right)$  
+
+##### Confidence interval with confidence level $1 - \alpha , \frac { 1 } { 2 } < \alpha < 1$
+$\left[ \overline { X } _ { n } - \Phi ^ { - 1 } ( 1 - \alpha / 2 ) \cdot \frac { s _ { x } } { \sqrt { n } } , \overline { X } _ { n } + \Phi ^ { - 1 } ( 1 - \alpha / 2 ) \cdot \frac { s _ { x } } { \sqrt { n } } \right]$  
+
+##### Maximum likelihood estimation (MLE) for discrete distributions with measurements $X _ { 1 } , X _ { 2 } , \ldots , X _ { n } :$ i.i.ds
+probability mass function $p ( x ; \theta ) :$ parameterized by $\theta$   
+Likelihood $L ( \theta ) : = \prod _ { i = 1 } ^ { n } p \left( x _ { i } ; \theta \right)$  
+Log-likelihood $\ell ( \theta ) : = \log ( L ( \theta ) ) = \sum _ { i = 1 } ^ { n } \log \left( p \left( x _ { i } ; \theta \right) \right)$  
+Maxiumum likelihood estimator (MLE) for $\theta : \hat { \theta } =$ value of $\theta$ for which $\ell$ attains its maximum; suitable for large samples
+
+##### MLE for continuous distributions with probability density $f ( x ; \theta ) :$ parameterized by $\theta$
+$L ( \theta ) : = \prod _ { i = 1 } ^ { n } f \left( x _ { i } ; \theta \right)$  
+$\ell ( \theta ) : = \log ( L ( \theta ) ) = \sum _ { i = 1 } ^ { n } \log \left( f \left( x _ { i } ; \theta \right) \right)$  
+
+##### MLE for Poisson distribution
+$L ( \lambda ) = \prod _ { i = 1 } ^ { n } e ^ { - \lambda } \frac { \lambda ^ { x _ { i } } } { x _ { i } ! }$   
+$\ell ( \lambda ) = \sum _ { i = 1 } ^ { n } \left[ x _ { i } \log ( \lambda ) - \lambda - \log \left( x _ { i } !  \right) \right]$   
+$\hat { \lambda } = \frac { 1 } { n } \sum _ { i = 1 } ^ { n } x _ { i } = \overline { x }$  
+confidence intervals: $\left[ \hat { \lambda } - \Phi ^ { - 1 } ( 0.975 ) \frac { s _ { x } } { \sqrt { n } } , \hat { \lambda } + \Phi ^ { - 1 } ( 0.975 ) \frac { s _ { x } } { \sqrt { n } } \right]$  
+
+##### MLE for Normal distribution $\mathcal { N } \left( \mu , \sigma ^ { 2 } \right)$
+$\hat { \mu } = \overline { X } , \quad \hat { \sigma } ^ { 2 } = \frac { 1 } { n } \sum _ { i = 1 } ^ { n } \left( x _ { i } - \overline { x } \right) ^ { 2 }$  
+
+##### MLE for Exponential distribution $E \times p ( \lambda )$
+$\hat { \lambda } = \frac { 1 } { \overline { x } }$  
+confidence interval: $\left[ \hat { \lambda } \left( 1 - \frac { \Phi ^ { - 1 } ( 0.975 ) } { \sqrt { n } } \right) , \hat { \lambda } \left( 1 + \frac { \Phi ^ { - 1 } ( 0.975 ) } { \sqrt { n } } \right) \right]$  
+
+##### Bayesian estimation approach: parameter $\theta$ as random
+Likelihood as conditional probability: $L ( \theta ) = p _ { X | \Theta = \theta } ( x ) = P [ X = x | \Theta = \theta ]$  
+$P [ \Theta = \theta | X = x ] = \frac { P [ X = x | \Theta = \theta ] \cdot P [ \Theta = \theta ] } { P [ X = x ] }$  :  $posterior = \frac { likelihood \cdot prior } { evidence }$  
+Maximum a posteriori (MAP) estimator: $\hat { \theta }$ that maximizes the $posterior\ P [ \Theta = \theta | X = x ]$ , suitable for small samples
+
+##### Bayesian estimation of continuous parameter with density $f _ { \ominus } ( \theta )$
+$f _ { \Theta | X = x } ( \theta ) = \frac { f _ { X | \Theta = \theta } ( x ) \cdot f _ { \ominus } ( \theta ) } { f _ { X } ( x ) }$  
+
+In large sample limit, $n \rightarrow \infty :$ MAP (Bayesian) estimate converges to ML (frequentist) estimate
+
+##### Statistical Hypothesis Testing
+1) Model: choose distribution describing your data. Formulate claim you want to prove.  
+2) Null hypothesis: choose the $H _ { 0 } (null\ hypothesis)$ , $H _ { A } (alternative\ hypothesis)$ and their distribution parameters  
+3) Test statistic: based on your sample data  
+4) Choose significance level: e.g. $\alpha = 5 \%$  
+5) Range of rejection $K$ such that $P [ X \in K ] \leq \alpha$ under $H _ { 0 }$  
+reject $H _ { 0 }$ if $X \in K$
+6) Test decision: reject $H _ { 0 }$ if $X \in K$ otherwise fail to reject.  
+
+|       |             | Decision           |                   |     
+|-------|-------------|--------------------|-------------------|
+|       |             | $H _ { 0 }$        | $H _ { A  }$      |
+| Truth | $H _ { 0 }$ | true negative (TN) | type I error (FP) |
+|       | $H _ { A }$ | type II error (FN) | true positive (TP)|  
+
+* Significance level $\alpha : \alpha = P [ FP | H _ { 0 } ]$ 
+* Power $1 - \beta : \beta =  P [ FN | H _ { A } ]$ ; higher Significance(smaller $\alpha$) => lower Power ; bigger $\alpha$ or larger sample => higher Power  
+
+##### P-value
+(Def.) The *p-value* is the smallest significance level $\alpha$ for which we reject a null hypothesis for the given data set.  
+(Alt.) The *p-value* is the probability under the null hypothesis to find the actual outcome or a more extreme one. 
+
+##### Test using the normal approximation $X \approx \mathcal { N } \left( n \pi _ { 0 } , n \pi _ { 0 } \left( 1 - \pi _ { 0 } \right) \right)$
+Test statistic: $Z = \frac { X - n \pi _ { 0 } } { \sqrt { n \pi _ { 0 } \left( 1 - \pi _ { 0 } \right) } }$ Distribution of $Z$ under $H _ { 0 } : Z \approx \mathcal { N } ( 0,1 )$  
+
+##### Paired-samples (or one-sample) t test with model $X _ { 1 } , \ldots , X _ { n } \stackrel { \mathrm { i } i \mathrm { d } } { \sim } \mathcal { N } \left( \mu , \sigma ^ { 2 } \right)$ 
+$H _ { 0 } : \mu = \mu _ { 0 } = 0$ ; $H _ { \mathrm { A } } : \mu \neq \mu _ { 0 }$  
+Test statistic: $T = \frac { \sqrt { n } \left( \overline { X } - \mu _ { 0 } \right) } { s _ { x } }$  with T distribution | $H _ { 0 }$ with (n - 1) degrees of freedom
+
+##### Student's T distribution $T \sim t _ { m }$ with  $m$ "degrees of freedom", symetry $t _ { m , \alpha } = - t _ { m , 1 - \alpha }$
+Range of rejection: $K = \left( - \infty , - t _ { n - 1,1 - \frac { \alpha } { 2 } } \right] \cup \left[ t _ { n - 1,1 - \frac { \alpha } { 2 } } , \infty \right)$  
+
+##### Confidence Interval for $\mu$ with confidence level $1 - \alpha$
+$I = \left\{ \mu _ { 0 } | \text { null hypothesis } H _ { 0 } : \mu = \mu _ { 0 } \text { is not rejected } \right\}$  
+$H _ { \mathrm { A } } : \mu \neq \mu _ { 0 } \Rightarrow I = \left[ \overline { x } - t _ { n - 1,1 - \alpha / 2 } \frac { s _ { x } } { \sqrt { n } } , \overline { x } + t _ { n - 1,1 - \alpha / 2 } \frac { s _ { x } } { \sqrt { n } } \right]$  
+$H _ { \mathrm { A } } : \mu < \mu _ { 0 } \Rightarrow I = \left( - \infty , \overline { x } + t _ { n - 1,1 - \alpha } \frac { s _ { x } } { \sqrt { n } } \right]$  
+$H _ { \mathrm { A } } : \mu > \mu _ { 0 } \Rightarrow I = \left[ \overline { x } - t _ { n - 1,1 - \alpha } \frac { s _ { x } } { \sqrt { n } } , \infty \right)$  
+
+##### Sign Test: consider differences $X _ { i } = Z _ { i } - Y _ { i }$ i. i. d. with median $m$
+$H _ { 0 } : m = m _ { 0 } = 0$  , $H _ { \mathrm { A } } : m \neq m _ { 0 }$  
+Test statistic: $V = \# \{ i | X _ { i } > m _ { 0 } \}$, $V$ under $H _ { 0 } : V \sim \operatorname { Bin } ( n , 0.5 )$  
+Range of rejection: $K = [ 0 , c ] \cup [ n - c , n ]$ such that $P _ { H _ { 0 } } [ V \in K ] \leq \alpha$ (significance level)  
+$c$ determined by binomial distribution: $P _ { H _ { 0 } } [ V \in K ] = 2 P _ { H _ { 0 } } [ V \leq c ]$ 
+
+##### Wilcoxon Signed-Rank Test (wilcox.test): concider differences $X _ { i } = Z _ { i } - Y _ { i }$ i. i. d. with median $m$
+$H _ { 0 } : m = 0$ , $H _ { \mathrm { A } } : m \neq 0$  
+Test statistic: $W = \sum _ { i = 1 } ^ { n } \operatorname { sign } \left( X _ { i } \right) R _ { i }$ , where  $R _ { i }$: rank of  $X _ { i }$ order by absolute value $\left| X _ { i } \right|$  
+Range of rejection: $K = ( - \infty , 0.5 - c ] \cup [ 0.5 + c , \infty )$ such that $P _ { H _ { 0 } } [ W \in K ] \leqslant \alpha$  
+
+##### T-Test
+$X _ { 1 } , \ldots , X _ { n } \stackrel { \mathrm { i } . \mathrm { i.d } } \cdot \mathcal { N } \left( \mu _ { X } , \sigma ^ { 2 } \right)$ , $Y _ { 1 } , \ldots , Y _ { m } \stackrel { \mathrm { i } . \mathrm { i.d } } { \sim } \mathcal { N } \left( \mu _ { Y } , \sigma ^ { 2 } \right)$ , $H _ { 0 } : \mu _ { X } = \mu _ { Y }$ , $H _ { \mathrm { A } } : \mu _ { X } \neq \mu _ { Y }$  
+Test statistic: $T = \frac { \overline { X } - \overline { Y } } { s _ { \text { pool } } \sqrt { 1 / n + 1 / m } }$  , $s _ { \mathrm { pool } } ^ { 2 } = \frac { 1 } { n + m - 2 } \left( ( n - 1 ) s _ { x } ^ { 2 } + ( m - 1 ) s _ { y } ^ { 2 } \right)$  , $T$ distribution under $H _ { 0 } : T \sim t _ { n + m - 2 }$
+
+##### Permutation Test: nonparametric test
+$X _ { 1 } , \ldots , X _ { n } \stackrel { \mathrm { i } . \mathrm { d } . \mathrm { d } } { \sim } F _ { X } ( \cdot )$ , $Y _ { 1 } , \ldots , Y _ { m } \stackrel { \mathrm { i.i.d. } } { \sim } F _ { Y } ( \cdot )$  
+$H _ { 0 } : F _ { X } = F _ { Y }$ , $H _ { \mathrm { A } } : F _ { x } \neq F _ { Y }$  
+Test statistic: $D = \overline { X } - \overline { Y }$  
+Resampling: choose number of repetitions $N$ > 1000  
+Randomly assign $n$ values of $\left\{ X _ { i } \right\} \cup \left\{ Y _ { i } \right\}$ to "type I" and the rest $m$ values to "type II"  
+Repeat $N$ times  
+Range of rejection: $K = \left( - \infty , c _ { l } \right] \cup \left[ c _ { u } , \infty \right)$, $c _ { l } :$ empirical $\alpha / 2$ -quantile of resampling distribution, $c _ { u } :$ empirical $1 - \alpha / 2$ -quantile of resampling distribution  
+
+##### Effect size Two samples: Experimental group $\left\{ X _ { i } \right\} _ { i } ,$ control group $\left\{ Y _ { i } \right\} _ { i }$ , effect size $= \frac { \overline { X } - \overline { Y } } { s _ { \text { pool } } }$  
+
+##### False Positive Rate: $F P R = E \left[ \frac { F P } { F P + T N } \right] = E \left[ \frac { V } { m _ { 0 } } \right]$ controlled by significance level  $\alpha = F P R$
+|       |             | Decision           |                        |      Total      |
+|-------|-------------|--------------------|------------------------|-----------------|
+|       |             | $H _ { 0 }$        | $H _ { A  }$           |                 |
+| Truth | $H _ { 0 }$ | True Negative $U$  | type I error (FP): $V$ | $m _ { 0 }$     |
+|       | $H _ { A }$ | type II error (FN) | True Tositive: $S$     | $m - m _ { 0 }$ | 
+| Total |             | $m - R$            |  $R$                   | $m$             |
+
+##### Family-Wise Error Rate: $\mathrm { FWER } = P [ 1$ or more type $|$ errors $] = P [ V \geq 1 ]$ : n:20-50, errors are critical
+FWER controlled by experiment-wise type I error rate $\overline { \alpha }$  
+Test procedure that guarantees a FWER of (at most) $\overline { \alpha } :$  
+1. for each test case (e.g. gene), calculate p-value  
+2. adjust p-value  
+3. reject null hypotheses whose adjusted p-value is smaller than $\overline { \alpha }$ ; accept others
+
+##### Controlling FWER
+order p-values: $P _ { ( 1 ) } \leq P _ { ( 2 ) } \leq P _ { ( 3 ) } \leq \ldots \leq P _ { ( m ) }$  
+
+|                 | Bonferroni method      | Holm method                           |
+|-----------------|------------------------|---------------------------------------|
+| adjust p-values | $P _ { \mathrm { adj } , i } = \min \left\{ m \cdot P _ { i } , 1 \right\}$ | $P _ { \mathrm { adj } , ( i ) } = \max \left\{ \min \left\{ ( m - i + 1 ) \cdot P _ { ( i ) } , 1 \right\} , P _ { \mathrm { adj } , ( i - 1 ) } \right\}$  |
+
+reject null hypotheses whose adjusted p-value is smaller than $\overline { \alpha }$; accept others  : guaranteed $\mathrm { FWER } \leq \overline { \alpha }$
+
+##### Adjusted p-value
+The adjusted p-value of a certain null hypothesis is the smallest experiment-wise type I error rate $\overline { \alpha }$ for which we reject this hypothesis for the given data set.
+
+##### False discovery rate: $\mathrm { FDR } = E \left[ \frac { \mathrm { FP } } { \mathrm { FP } + \mathrm { TP } } \right] = E \left[ \frac { V } { R } \right]$ : n > 500 ; looking for discovery  
+1. for each test case, calculate p-value
+2. adjust p-values to get corresponding q-values
+3. reject null hypotheses whose q-value is smaller than $\overline { q }$; accept others 
+
+##### Controlling FDR: Benjamini-Hochberg method
+order p-values: $P _ { ( 1 ) } \leq P _ { ( 2 ) } \leq P _ { ( 3 ) } \leq \ldots \leq P _ { ( m ) }$  
+adjust p-values to get q-values: $Q _ { ( i ) } = \max \left\{ \min \left\{ \frac { m } { i } \cdot P _ { ( i ) } , 1 \right\} , Q _ { ( i - 1 ) } \right\}$   
+reject null hypotheses whose q-value is smaller than $\overline { q }$; accept others  
+Procedure quarantees $F \mathrm { DR } \leq \overline { q }$
+
+##### Simple linear regression: $Y _ { i } = \beta _ { 0 } + \beta _ { 1 } x _ { i } + E _ { i }$ , $E _ { 1 } , \ldots , E _ { n } \stackrel { \mathrm { i } . \mathrm { i } . \mathrm { d } } { \sim } \mathcal { N } \left( 0 , \sigma ^ { 2 } \right)$ , $i = 1 , \dots , n$
+$Y _ { i }$ : response variable  ;  $x _ { i }$ : explanatory variable  ;  $E _ { i }$ : error or noise variables  
+Residuals: $R _ { i } = Y _ { i } - \hat { \beta } _ { 0 } - \hat { \beta } _ { 1 } x _ { i }$  
+Residual Sum of Squares: RSS $= \sum _ { i = 1 } ^ { n } R _ { i } ^ { 2 }$  
+Minimizers $\hat { \beta } _ { 0 }$ and $\hat { \beta } _ { 1 }$ of RSS: unbiased estimators for the true  $\beta _ { 0 }$ and $\beta _ { 1 }$  
+Estimate $\hat { \sigma } ^ { 2 } = \frac { 1 } { n - 2 } \sum _ { i = 1 } ^ { n } R _ { i } ^ { 2 }$  
+
+##### Significance of explanatory variable: t-test
+$H _ { 0 } : \beta _ { 1 } = 0$; $H _ { \mathrm { A } } : \beta _ { 1 } \neq 0$ ; $T = \frac { \hat { \beta } _ { 1 } - 0 } { \widehat { \mathrm { se } } \left( \hat { \beta } _ { 1 } \right) }$ ; $H _ { 0 } : T \sim t _ { n - 2 }$ ; $K = \left( - \infty , - t _ { n - 2,1 - \frac { \alpha } { 2 } } \right] \cup \left[ t _ { n - 2,1 - \frac { \alpha } { 2 } } , \infty \right)$ , $| T | > t _ { n - 2,1 - \frac { \alpha } { 2 } } : reject$
+
+#####  Coefficient of determination $R ^ { 2 } = \left( \frac { s _ { \hat { y } y } } { s _ { \hat { y } } s _ { y } } \right) ^ { 2 }$
+$\hat { \beta } _ { 1 } = \frac { s _ { x y } } { s _ { x } ^ { 2 } } = \frac { \operatorname { Cov } ( X, Y ) } { \operatorname { Var } ( Y ) } = \operatorname { Cor } ( Y , X ) \frac { \operatorname { Sd } ( Y ) } { \operatorname { Sd } ( X ) }$ , $s _ { x y } = \frac { 1 } { n - 1 } \sum _ { i = 1 } ^ { n } \left( x _ { i } - \overline { x } \right) \left( y _ { i } - \overline { y } \right)$ ; $\hat { \beta } _ { 0 } = \overline { Y } - \hat { \beta } _ { 1 } \overline { X }$
+
+##### Fitting linear model to transformed data: $\log \left( Y _ { i } \right) = \hat { \beta } _ { 0 } + \hat { \beta } _ { 1 } \log \left( X _ { i } \right) + E _ { i }$  
+
+
+
