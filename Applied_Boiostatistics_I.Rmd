@@ -71,7 +71,7 @@ continuous $\operatorname { Var } ( X ) = \int _ { - \infty } ^ { \infty } ( x -
 ##### Bernoulli distribution $X \in \{ 0,1 \}$ $X \sim$ Bernoulli( $\pi )$ 
 * $\pi : = P [ X = 1 ]$
 
-##### Binomial distribution $X \in \{ 0,1 , \ldots , n \}$ $X \sim \operatorname { Bin } ( n , \pi ) , n \in \mathbb { N } , \pi \in ( 0,1 )$
+##### Binomial distribution $X \in \{ 0,1 , \ldots , n \}$ $X \sim \operatorname { Bin } ( n , \pi ) , n \in \mathbb { N } , \pi \in ( 0,1 )$ norm.approx. $\sim \operatorname { N } ( n \pi , n \pi ( 1 - \pi ) )$
 * $p ( x ) = P [ X = x ] = \left( \begin{array} { l } { n } \\ { x } \end{array} \right) \pi ^ { x } ( 1 - \pi ) ^ { n - x }$
 * $E [ X ] = n \pi , \operatorname { Var } ( X ) = n \pi ( 1 - \pi )$
 
@@ -284,15 +284,14 @@ Test procedure that guarantees a FWER of (at most) $\overline { \alpha } :$
 2. adjust p-value  
 3. reject null hypotheses whose adjusted p-value is smaller than $\overline { \alpha }$ ; accept others
 
-##### Controlling FWER: Bonferroni method
-$P _ { \mathrm { adj } , i } = \min \left\{ m \cdot P _ { i } , 1 \right\}$  
-quarantees $\mathrm { FWER } \leq \overline { \alpha }$  
-
-##### Controlling FWER: Holm method
+##### Controlling FWER
 order p-values: $P _ { ( 1 ) } \leq P _ { ( 2 ) } \leq P _ { ( 3 ) } \leq \ldots \leq P _ { ( m ) }$  
-adjust p-values: $P _ { \mathrm { adj } , ( i ) } = \max \left\{ \min \left\{ ( m - i + 1 ) \cdot P _ { ( i ) } , 1 \right\} , P _ { \mathrm { adj } , ( i - 1 ) } \right\}$  
-reject null hypotheses whose adjusted p-value is smaller than $\overline { \alpha }$; accept others  
-Procedure quarantees $\mathrm { FWER } \leq \overline { \alpha }$
+
+|                 | Bonferroni method      | Holm method                           |
+|-----------------|------------------------|---------------------------------------|
+| adjust p-values | $P _ { \mathrm { adj } , i } = \min \left\{ m \cdot P _ { i } , 1 \right\}$ | $P _ { \mathrm { adj } , ( i ) } = \max \left\{ \min \left\{ ( m - i + 1 ) \cdot P _ { ( i ) } , 1 \right\} , P _ { \mathrm { adj } , ( i - 1 ) } \right\}$  |
+
+reject null hypotheses whose adjusted p-value is smaller than $\overline { \alpha }$; accept others  : guaranteed $\mathrm { FWER } \leq \overline { \alpha }$
 
 ##### Adjusted p-value
 The adjusted p-value of a certain null hypothesis is the smallest experiment-wise type I error rate $\overline { \alpha }$ for which we reject this hypothesis for the given data set.

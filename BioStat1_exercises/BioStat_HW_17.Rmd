@@ -1,0 +1,113 @@
+---
+title: "BioStat_HW_17"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Exercises for Applied Biostatistics I - HS 2018
+
+###17.
+The data set bone-fracture contains 50 samples of the following four variables:
+
+- conc: concentration of the degradation product of a drug. All patients are taking the same dosage of the drug.
+
+- dif: difference between needed and available screw length. The needed screw length is determined based on X-ray images of the bone fracture. However, screws are only available in steps of 5 mm. The column dif lists the difference of the needed screw length to the nearest available length.
+
+- no.cells: number of cells counted in a proliferation assay. In this assay, the number of living cells in a petri dish are counted at a specific time.
+
+- hit: success (hit = 1) or failure (hit = 0) of a manual prediction whether a bone is fractured or not. The physician E. Bruch claims that he is able to determine with his own hands whether a bone is fractured or not, without looking at an X-ray image.
+
+You find the data set under _bone-fracture.csv_ on ILIAS and can read it in as follows:
+
+```{r fracture}
+fracture <- read.table("bone-fracture.csv", sep = ";", header = TRUE)
+summary(fracture)
+str(fracture)
+```
+Find an appropriate distribution for each of the four random variables and estimate its parameters. If possible, indicate an approximate 95% confidence interval for each parameter. Visualize the distribution of the data and the distribution of your fitted model.
+
+For example: if you consider a variable to have come from a binomial distribution, you estimate parameter ??. Then, using the standard error of this estimated parameter and the formula, calculate the confidence interval of ??. Finally, recheck whether your guess was appropriate by looking at the Q-Q plot (which should show a straight line) and adding the estimated probability mass function to the histogram (which should match one another).
+
+
+## Creating a general plot function
+
+You can also embed plots, for example:
+```{r compDists, echo=TRUE}
+library("car")
+
+fdata <- fracture$conc
+desc <- "concentration"
+
+compDists <- function(fdata, desc) {
+#  def.par=par(no.readonly = T)
+#  layout.show(layout(matrix(c(1,1,2,3), nrow=2, ncol=2, byrow = TRUE)))
+  
+  dmin <- floor(min(fdata))
+  dmax <- ceiling(max(fdata))
+  size <- length(fdata)
+  size <- length(fdata)
+  hist(fdata, freq = F, breaks = 20, xlab = desc, xlim = c(dmin, dmax), main = paste("Histogram of ", desc))
+  mu <- mean(fdata)
+  abline(v = mu, lwd = 2, col = "blue")
+  sd <- sd(fdata)
+  max <- max(fdata)
+  sem <- sd(fdata)/sqrt(size)
+  a <- 1 - .05/2
+  fi <- qnorm(a,0)
+  lines(c(mu - sem, mu + sem), c(0,0), lwd = 2, col = "red")
+  text(mu + sem, 0,"SEM")
+   
+  xseq=seq(dmin,dmax, (dmax-dmin)/100)
+  lines(xseq, dnorm(xseq, mean=mean(fdata), sd=sd(fdata)), lwd = 2, col = "steelblue")
+  lines(xseq, dunif(xseq, min = dmin, max = dmax), lwd = 2, col = "green")
+  #lines(xseq, dpois(xseq, lambda = mean(fdata)), lwd = 2, col = "red")
+  
+  # another test of normality using the Shapiro-Wilk-Test
+  shp.test <- shapiro.test(fdata)
+  spw <- round(shp.test$statistic,3)
+  spval <- round(shp.test$p.value,3)
+  # W close to 1 and p-value < 0.05 means the data is not normaly distributed
+  
+  qqPlot(fdata, dist = "norm", main = paste(desc, " vs Normal distribution"), xlab = paste("Theor. quantiles (norm) shapiro W:", spw, " , p-val:", spval), ylab = "Empirical quantiles", envelope=.975)
+  qqPlot(fdata, dist = "unif", main = paste(desc, " vs Uniform distribution"), xlab = "Theor. quantiles (unif)", ylab = "Empirical quantiles", envelope=.975)
+#  qqPlot(fdata, dist = "pois", main = " vs Poisson distribution", xlab = "Theor. quantiles (poisson-distribution)", ylab = "Empirical quantiles", lambda = mean(fdata))
+#  qqPlot(fdata, dist = "exp", main = " vs Exponential distribution", xlab = "Theor. quantiles (exp-distribution)", ylab = "Empirical quantiles")
+#  qqPlot(fdata, dist = "t", main = " vs Student's T distribution", xlab = "Theor. quantiles (t-distribution)", ylab = "Empirical quantiles", df = 49)
+  
+#  par(def.par)
+}
+
+```
+
+Ploting comparation distributions for the "concentration"
+```{r conc, echo=TRUE}
+summary(fracture$conc)
+compDists(fracture$conc, "concentration")
+```
+
+Ploting comparation distributions for the "difference"
+```{r dif, echo=TRUE}
+summary(fracture$dif)
+compDists(fracture$dif, "difference")
+```
+
+Ploting comparation distributions for the "number of cells"
+```{r no.cells, echo=TRUE}
+summary(fracture$no.cells)
+compDists(fracture$no.cells, "number of cells")
+```
+
+```{r hit, echo=TRUE}
+fdata <- fracture$hit
+summary(fdata)
+qqPlot(fdata, dist = "binom", main = " vs binom distribution", xlab = "Theor. quantiles (binom-distribution)", ylab = "Empirical quantiles", size=1, prob=mean(fdata))
+size <- length(fdata)
+success <- length(fdata[fdata==1])
+(1 - pbinom(success, size=size, prob = .5))
+binom.test(x=success,n=size)
+#var(fdata)
+```
+
