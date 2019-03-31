@@ -96,10 +96,11 @@ lrtest(lm.noblock, lm.straw)
 # 1   4 -87.460                    
 # 2  13 -84.227  9 6.465     0.6926
 
-# From p-value 0.6926 also tels us that adding 'land' will just fit the noise
+# From p-value 0.6926 also tells us that adding 'land' will just fit the noise
 
 library(MASS)
-# using also the Akaike information criterion and starting from full model backword it comes also to
+# using also the Akaike information criterion and starting from full model backward it 
+# comes also to the 'yield ~ gtype' model
 lm.straw.bw <- stepAIC(lm.straw, direction = "backward", trace = 0)
 summary(lm.straw.bw)
 # lm(formula = yield ~ gtype, data = straw)
