@@ -1,9 +1,10 @@
 ---
-title: "Exrcise 21"
+title: "Exercise 21"
 author: "Diana Solis, Shakiba Fadaei, Todor Gitchev"
 date: "5/19/2019"
 output:
   html_document: default
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
