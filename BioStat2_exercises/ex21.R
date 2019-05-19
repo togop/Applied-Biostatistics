@@ -17,7 +17,7 @@ plot_class_prob <- function(pi_0, pi_1) {
   abline(v=decision_boundary, lty=2, col="black" )
   text(decision_boundary, 0.5, "decision boundary", cex= 0.7)
 
-  legend("topright", legend = c("sea brass", "salmon", "a posteriori", "evidence"), col=c("cyan3", "brown1", "gray", "darkblue"), lty = c(1, 1, 2, 1), cex = 0.7)
+  legend("topright", legend = c("sea bass", "salmon", "a posteriori", "evidence"), col=c("cyan3", "brown1", "gray", "darkblue"), lty = c(1, 1, 2, 1), cex = 0.7)
 } 
 
 plot_class_prob(0.5, 0.5)

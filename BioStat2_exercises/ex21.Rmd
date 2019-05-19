@@ -13,7 +13,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Introduction
 
-We calculate the Bayes classifier for one explanatory variable (feature) under the assumption that the class-conditional probability densities are normal. We want to distinguish between two fish species, sea brass (class 0) and salmon (class 1). Assume the class-conditional probability densities for the length x of the fishes are given by the following normal distributions:
+We calculate the Bayes classifier for one explanatory variable (feature) under the assumption that the class-conditional probability densities are normal. We want to distinguish between two fish species, sea bass (class 0) and salmon (class 1). Assume the class-conditional probability densities for the length x of the fishes are given by the following normal distributions:
 
 $X | Y=0 \sim \mathcal{N}\left(\mu=7, \sigma^{2}=1\right)$ for sea brass
 and
@@ -54,7 +54,7 @@ plot_class_prob <- function(pi_0, pi_1) {
   abline(v=decision_boundary, lty=2, col="black" )
   text(decision_boundary, 0.5, "decision boundary", cex= 0.7)
 
-  legend("topright", legend = c("sea brass", "salmon", "a posteriori", "evidence"), col=c("cyan3", "brown1", "gray", "darkblue"), lty = c(1, 1, 2, 1), cex = 0.7)
+  legend("topright", legend = c("sea bass", "salmon", "a posteriori", "evidence"), col=c("cyan3", "brown1", "gray", "darkblue"), lty = c(1, 1, 2, 1), cex = 0.7)
 } 
 
 plot_class_prob(0.5, 0.5)
