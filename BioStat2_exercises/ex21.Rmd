@@ -3,8 +3,8 @@ title: "Exercise 21"
 author: "Diana Solis, Shakiba Fadaei, Todor Gitchev"
 date: "5/19/2019"
 output:
-  html_document: default
   pdf_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -40,22 +40,6 @@ evidence: $p(x)=\sum_{i=0}^{1} p\left(x | y_{i}\right) \pi_{i}$
 
 a posteriory: $p\left(x | y_{i}\right) \pi_{i}$
 
- Decision boundary:
-$$
-\pi_0 \cdot \frac{1}{\sqrt{2 \pi}} e^{-\frac{(x-7)^2}{2}} = \pi_1 \cdot \frac{1}{\sqrt{2 \pi }} e^{-\frac{(x-3)^2}{2}}
-$$
-
-$$
-\pi_0 \cdot e^{-(x-7)^2}= \pi_1 \cdot e^{-(x-3)^2}
-$$
-
-$$
- log(\pi_0) - {\left(x-7\right)^{2}} = log(\pi_1) - {(x-3)^2}
-$$
-
-$$
- log(\pi_0)  - x^2 +14x -49 = log(\pi_1) - x^2 + 6x - 9 => x=\frac{log(\pi_1/\pi_0) + 40}{8}
-$$
 
 ```{r}
 fx_evidence <- function(length, pi_0, pi_1) pi_0*fx_y0(length) + pi_1*fx_y1(length)
@@ -85,4 +69,21 @@ We have prior class probabilities:
 plot_class_prob(2/3, 1/3)
 ```
 
+# c)
+ Decision boundary:
+$$
+\pi_0 \cdot \frac{1}{\sqrt{2 \pi}} e^{-\frac{(x-7)^2}{2}} = \pi_1 \cdot \frac{1}{\sqrt{2 \pi }} e^{-\frac{(x-3)^2}{2}}
+$$
+
+$$
+\pi_0 \cdot e^{-(x-7)^2}= \pi_1 \cdot e^{-(x-3)^2}
+$$
+
+$$
+ log(\pi_0) - {\left(x-7\right)^{2}} = log(\pi_1) - {(x-3)^2}
+$$
+
+$$
+ log(\pi_0)  - x^2 +14x -49 = log(\pi_1) - x^2 + 6x - 9 => x=\frac{log(\pi_1/\pi_0) + 40}{8}
+$$
 
